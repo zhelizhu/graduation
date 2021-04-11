@@ -1,0 +1,134 @@
+.el-form {
+
+    position: fixed;
+
+    width: 45%;
+
+    padding-bottom: 80px;
+
+} 
+.form-title{
+
+    font-size: 75px;
+
+    margin-bottom: 25px;
+
+    text-align: right;
+
+    color: #66b1ff;
+
+}
+
+.el-form-item__label{
+
+    color: #fff;
+
+}
+
+.el-form-item{
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+.el-form-item__content{
+
+    margin-left: 0 !important;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    .el-input{
+
+            padding: 8px 0;
+
+    }
+
+    /deep/ .el-button{
+
+            width: 50%;
+
+    }
+          
+}
+
+.form-btn{
+
+    margin-left: 90px!important;
+
+}
+
+.drag-validator{
+
+    margin-left: 90px;
+
+}
+
+@media screen and (max-width: 992px){
+
+    .el-form {
+    
+        width: 90%;
+
+    }
+    .form-title{
+
+        font-size: 35px;
+
+        text-align: center;
+
+        display: none;
+    
+    }
+    .el-form-item{
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        margin: 15px 0;
+
+    }
+    .is-active{
+
+        font-size: 25px;
+
+    }
+    .el-form-item__label{
+
+        text-align: left;
+
+        text-indent: 1em;
+    
+    }
+    .form-btn{
+
+        margin-left: 0!important;
+
+        .el-form-item__content{
+
+            display: flex;
+
+            flex-direction: column;
+
+            .el-button{
+
+                width: 100%;
+
+                margin: 15px 0;
+
+            }
+
+        }
+    
+    }
+    .drag-validator{
+        margin-left: 0;
+    }
+
+}
