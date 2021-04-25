@@ -1,4 +1,4 @@
-// 用户模型
+// 视频模型
 
 let sequelize = require('../../db/connect')
 
@@ -27,14 +27,12 @@ Video.init({
   videoSrc: {
     type: DataTypes.STRING(1000),
     allowNull: false,
-    unique: true,
     defaultValue: '',
     comment: '视频src'
   },
   videoBgSrc: {
     type: DataTypes.STRING(1000),
-    allowNull: false,
-    unique: true,
+    allowNull: true,
     defaultValue: '',
     comment: '视频背景src'
   },
@@ -57,7 +55,6 @@ Video.init({
     comment: '上传者'
   },
   videoStatus:{
-
     type: DataTypes.INTEGER(10),
     allowNull: false,
     defaultValue: 1,

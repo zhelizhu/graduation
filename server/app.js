@@ -4,18 +4,31 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+global.dirname = __dirname
+
+global.hostname = 'http://127.0.0.1:3000'
+
 var indexRouter = require('./routes/index');
+
 var usersRouter = require('./routes/users');
 
 let videosRouter = require('./routes/video')
 
+let utilsRouter = require('./routes/utils')
+
+let clientsideRouter = require('./routes/clientside')
+
 var bodyParser = require('body-parser')
 
-let model = require('./model/model')
+// const formidable = require('express-formidable') // 引入
 
-let middleWare = require('./middleWare/intercept')
+let middleWare = require('./middleWare/intercept');
+
+// const { sequelize } = require('./model/user/user');
 
 var app = express();
+
+// app.use(formidable());  // 中间件
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -36,23 +49,43 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 // 允许跨域
-app.all('*', function (req, res, next) {
+app.all('*', function(req, res, next) {
+
   res.header("Access-Control-Allow-Origin", req.headers.origin);
-  // res.header("Access-Control-Allow-Origin", '*');
   res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("X-Powered-By", ' 3.2.1')
-  if (req.method === "OPTIONS") res.send(200); /*让options请求快速返回*/
-  else next();
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Credentials","true");
+  res.header("X-Powered-By",' 3.2.1')
+
+  if(req.method === "OPTIONS"){
+
+    res.sendStatus(200);/*让options请求快速返回*/
+
+  }
+  else{
+
+    next();
+
+  }
 });
+// let cors = require('cors')
+
+// app.use(cors())
 
 middleWare(app)
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/videos',videosRouter)
+app.use('/utils',utilsRouter)
+app.use('/clientside',clientsideRouter)
+
+// app.get('/video/*',function(req,res){
+
+//   res.sendFile(__dirname+'/'+req.url)
+
+// })
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

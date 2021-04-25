@@ -2,6 +2,7 @@
 
 let whiteList = [
     'http://localhost:8080',
+    'http://localhost:8088',
 ]
 
 // 中间件拦截

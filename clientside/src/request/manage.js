@@ -27,3 +27,17 @@ export const postAxios = (url,data)=>{
     })
 
 }
+
+export const deleteAxios = (url,data)=>{
+
+    return Vue.axios({
+
+        method:'DELETE',
+
+        url,
+
+        data
+
+    })
+
+}

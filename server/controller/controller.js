@@ -30,6 +30,22 @@ let addVideo = require('./Video/addVideo')
 
 let indexData = require('./Index/indexData')
 
+// 验证用户token
+
+let userToken = require('./User/checkUserToken')
+
+let uploadVideo = require('./Video/uploadVideo')
+
+let production = require('./User/production')
+
+let attention = require('./User/attention')
+
+let callAttention = require('./User/callAttention')
+
+let playAttention = require('./User/playAttention')
+
+let fans = require('./User/fans')
+
 module.exports = {
     
     registerCon,
@@ -60,6 +76,20 @@ module.exports = {
 
     addVideo,
 
-    indexData
+    indexData,
+
+    userToken,
+
+    uploadVideo,
+
+    production,
+
+    attention,
+
+    callAttention,
+
+    playAttention,
+
+    fans
 
 }

@@ -171,7 +171,7 @@ export default {
               }
               else{
 
-                this.$message.success(res.data.msg)
+                this.$message.error(res.data.msg)
 
               }
 

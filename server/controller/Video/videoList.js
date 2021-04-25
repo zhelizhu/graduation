@@ -4,9 +4,27 @@ module.exports = function(req,res){
 
   let params = req.body
 
-  console.log(params);
+  let sql = `select 
 
-  let sql = 'select * from video'
+  video_id as videoId,
+  
+  video_bg_src as videoBgSrc,
+
+  video_name as videoName,
+
+  video_info as videoInfo,
+
+  video_up_of_user as videoUpOfUser,
+
+  video_type as videoType,
+
+  play_sum as playSum,
+
+  coment_sum as comentSum,
+
+  collect_sum as collectSum
+  
+  from video`
 
   originalQuery(sql,params,'SELECT').then( (result) => {
 

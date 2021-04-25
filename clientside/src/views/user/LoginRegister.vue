@@ -12,7 +12,7 @@
             :default-active="menuActive"
             @select="handleSelect"
         >
-                <h1 class="title"><i class="el-icon-user-solid"></i>后台管理系统</h1>
+                <h1 class="title"><i class="el-icon-user-solid"></i>短视频系统</h1>
                 <el-menu-item index="login">登录</el-menu-item>
                 <el-menu-item index="register">注册</el-menu-item>
 
@@ -201,6 +201,8 @@ export default {
             flex: 1;
 
             font-size: 25px;
+
+            // 珠江水利委员会水文水资源局珠江水情预报中心
 
             text-align: left;
 

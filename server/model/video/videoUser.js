@@ -18,7 +18,6 @@ videoUser.init({
   userId: {
     type: DataTypes.STRING(30),
     allowNull: false,
-    unique: true,
     defaultValue: '',
     comment: '用户id'
   }
@@ -26,7 +25,6 @@ videoUser.init({
   videoId: {
     type: DataTypes.STRING(30),
     allowNull: false,
-    unique: true,
     defaultValue: '',
     comment: '视频id'
   }

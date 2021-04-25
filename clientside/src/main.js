@@ -5,6 +5,16 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 
+import VueCoreVideoPlayer from 'vue-core-video-player'
+
+Vue.use(VueCoreVideoPlayer)
+
+import VideoPlayer from 'vue-video-player'
+
+Vue.use(VideoPlayer)
+
+import './assets/less/style.less'
+
 // resetcss
 import 'reset-css';
 

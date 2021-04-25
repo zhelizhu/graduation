@@ -10,12 +10,37 @@ export default new Vuex.Store({
 
       dragValidatorStatus: false,
 
+      // 用户token
+      userToken:localStorage.getItem('userToken'),
+
+      videoSrc:'',
+
+      isPlay:false
+
   },
   mutations: {
 
     changeDragValidatorStatus (state,val){
 
       state.dragValidatorStatus = val
+
+    },
+
+    setUserToken( state,val ){
+
+      state.userToken = val
+
+    },
+
+    setVideoSrc( state,val ){
+
+      state.videoSrc = val
+
+    },
+
+    setIsPlay( state,val ){
+
+      state.isPlay = val
 
     }
     

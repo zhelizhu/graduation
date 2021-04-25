@@ -4,7 +4,7 @@ let {enCodeString,getUserToken} = require('../../utils/utils')
 
 module.exports = function (req, res){
 
-    let {userEmail,userPwd} = req.body
+    let {userEmail,userPwd} = req.query
 
     User.findAll({
 

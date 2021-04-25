@@ -13,21 +13,21 @@
 
         <el-container>
 
-            <Banner></Banner>
-
           <el-main>
             <transition name="el-zoom-in-center">
             <router-view/>
             </transition>
           </el-main>
 
-          <el-footer>
+          <!-- <el-footer>
 
-          </el-footer>
+          </el-footer> -->
 
         </el-container>
 
       </el-container>
+
+      <Play v-show="isPlay"></Play>
 
     </div>
 
@@ -37,11 +37,13 @@
 
 import Aside from './aside/Aside'
 
-import Banner from './header/Banner'
+import Play from '../components/util/Play'
+
+import { mapState } from 'vuex'
 
 export default {
 
-    components: { Aside,Banner},
+    components: { Aside , Play },
 
     data() {
 
@@ -51,7 +53,11 @@ export default {
 
     },
 
-    computed: {},
+    computed: {
+
+      ...mapState(['isPlay'])
+
+    },
 
     watch: {},
 
@@ -80,7 +86,6 @@ export default {
 .el-header, .el-footer {
   background-color: #B3C0D1;
   color: #333;
-  text-align: center;
   line-height: 60px;
 }
 
@@ -93,8 +98,6 @@ export default {
 .el-main {
   background-color: #E9EEF3;
   color: #333;
-  text-align: center;
-  line-height: 160px;
 }
 
 body > .el-container {

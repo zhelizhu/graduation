@@ -1,16 +1,22 @@
 <!-- home -->
 <template>
 
-    <div class='home'>home</div>
+    <div class='home'>
+
+        <Banner></Banner>
+
+    </div>
 
 </template>
 
 <script>
 
+import Banner from '../header/Banner'
+
 
 export default {
 
-   components: {},
+   components: { Banner },
 
    data() {
        return {
@@ -22,8 +28,9 @@ export default {
 
    watch: {},
 
-
    methods: {
+
+
 
    },
    created() {

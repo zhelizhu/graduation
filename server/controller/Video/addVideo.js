@@ -9,8 +9,6 @@ module.exports = function(req,res) {
 
     let videoId = 'v_' + (+new Date)
 
-    console.log(formInline);
-
     Video.create({
 
        videoId,
@@ -43,7 +41,6 @@ module.exports = function(req,res) {
 
             })
 
-            console.log(1);
 
     }).catch((err) => {
 

@@ -5,7 +5,7 @@ let {User} = require('../../model/model')
 
 module.exports = function(req,res){
 
-    let {userToken} = req.body
+    let {userToken} = req.query
 
     let userId = varifyUserToken(userToken).data
 

@@ -12,9 +12,12 @@
     "element-ui": "^2.4.5",
     "reset-css": "^5.0.1",
     "style-resources-loader": "^1.4.1",
+    "videojs-contrib-hls.js": "^3.2.0",
     "vue": "^2.6.11",
     "vue-cli-plugin-style-resources-loader": "^0.1.5",
+    "vue-core-video-player": "^0.2.0",
     "vue-router": "^3.2.0",
+    "vue-video-player": "^5.0.2",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

@@ -1,13 +1,21 @@
 // 模型集合
-const User = require('./user')
+const User = require('./user/user')
 
-const Admin = require('./admin')
+const Admin = require('./user/admin')
 
-const ValidCode = require('./validCode.js')
+const ValidCode = require('./utils/validCode')
 
 const Video = require('./video/video')
 
-const videoUser =require('./video/videoUser')
+const VideoUser = require('./video/videoUser')
+
+const FansUp = require('./user/fansUp')
+
+const Film = require('./video/film')
+
+const Comment = require('./user/comment')
+
+const userLike = require('./user/userLike')
 
 module.exports = {
 
@@ -19,6 +27,14 @@ module.exports = {
 
     Video,
 
-    videoUser
+    VideoUser,
+
+    FansUp,
+
+    Film,
+
+    Comment,
+
+    userLike
 
 }
