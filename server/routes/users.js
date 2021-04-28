@@ -1,4 +1,7 @@
 var express = require('express');
+
+const formidable = require('express-formidable') // 引入
+
 var router = express.Router();
 
 let { 
@@ -48,8 +51,6 @@ router.post('/listUserDetail', listUserDetail)
 
 router.post('/userUpdata', userUpdata)
 
-router.post('/userAvatar', userAvatar)
-
 router.post('/resetPwd', resetPwd)
 
 // 用户作品
@@ -71,5 +72,9 @@ router.post('/playAttention', playAttention)
 // 用户粉丝
 
 router.get('/fans', fans)
+
+router.use(formidable()); 
+
+router.post('/userAvatar', userAvatar)
 
 module.exports = router;

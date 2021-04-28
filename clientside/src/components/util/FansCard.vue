@@ -15,15 +15,11 @@
 
       <div class="att-btn">
 
-        <el-button v-if="fans.mutually === 1" type="info" round>
+        <el-button v-if="mutually === 0" type="info" round @click="playAttention(fans.user_id)"><i class="el-icon-plus"></i>关注</el-button>
 
-            <i class="el-icon-plus"></i> 相互关注</el-button>
+        <el-button v-if="mutually === 1" type="success" round @click="cancelAttention(fans.user_id)">已关注</el-button>
 
-        <el-button v-else-if="isAttend" type="success" round @click="cancelAttention(fans.user_id)">已关注</el-button>
-
-        <el-button v-else type="info" round @click="playAttention(fans.user_id)">
-
-            <i class="el-icon-plus"></i> 关注</el-button>
+        <el-button v-if="mutually === 2" type="primary" round @click="cancelAttention(fans.user_id)"><i class="el-icon-plus"></i> 相互关注</el-button>
 
       </div>
 
@@ -45,7 +41,7 @@ export default {
 
        return {
 
-         isAttend:false
+         mutually:0
 
        };
 
@@ -53,8 +49,15 @@ export default {
 
    computed: {},
 
-   watch: {},
+   watch: {
 
+     fans(val){
+
+       this.mutually = val.mutually
+
+     }
+
+   },
 
    methods: {
     
@@ -73,7 +76,7 @@ export default {
 
          this.$message.success(res.data.msg);
 
-         this.isAttend = true
+         this.$emit('reFindFans')
 
        } )
 
@@ -94,7 +97,7 @@ export default {
 
          this.$message.success(res.data.msg);
 
-         this.isAttend = false
+         this.mutually = 0
 
        } )
 
@@ -103,6 +106,8 @@ export default {
 
    },
    created() {
+
+     this.mutually = this.fans.mutually
 
    },
 

@@ -1,49 +1,79 @@
 
 let {varifyUserToken} = require('../../utils/utils')
 
-let {User} = require('../../model/model')
+let { originalQuery } = require('../../utils/utils')
 
 module.exports = function(req,res){
 
     let {userToken} = req.query
 
+    console.log(userToken);
+
     let userId = varifyUserToken(userToken).data
 
-    if(userId){
+    console.log(userId);
 
-        User.findOne({
+    if (userId == undefined) {
 
-            where:{
+      userId = userToken
 
-                userId
+      console.log(userId);
 
-            },
-
-            attributes:['userId','email','nickName','sex','avatar']
-
-        }).then( (result) => {
-
-            res.send({
-
-                status:3000,
-
-                data:result
-
-            })
-
-        })
+      console.log(1);
 
     }
-    else{
 
-        res.send({
+    // console.log(userId);
 
-            status:3001,
+    let sql = `WITH 
+    userInfo AS (SELECT user_id,email,nick_name,sex,avatar
+    
+        FROM user
+    
+        WHERE user_id = :userId),
+    
+    uservideo AS (
+        SELECT count(*) uservideo FROM videouser
+        
+        WHERE user_id = :userId
+    ),
+    fans AS (
+        SELECT count(*) fans FROM fansup
+     
+        WHERE user_id = :userId
+    ),
+    attention AS (
+        SELECT count(*) attention FROM fansup
+     
+        WHERE fans_id = :userId
+    )
+    SELECT user_id,email,nick_name,sex,avatar, uservideo, fans, attention
+    FROM userInfo, uservideo, fans, attention`
 
-            msg: 'token错误'
+    originalQuery(sql,{ userId },'SELECT').then( (result) => {
 
+        res.json({
+    
+          status:1000,
+    
+          msg:'查询成功',
+    
+          data:result
+    
         })
-
-    }
+    
+      } ).catch((err) => {
+    
+        res.json({
+    
+          status: 1001,
+    
+          msg: '查询失败(服务器错误)',
+    
+          data: err
+    
+        })
+    
+      })
 
 }

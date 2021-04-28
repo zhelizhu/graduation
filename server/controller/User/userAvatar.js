@@ -1,47 +1,52 @@
+  let fs = require('fs')
+  
+  let path = require('path')
+  
+  let {varifyUserToken,originalQuery} = require('../../utils/utils')
 
-let {varifyUserToken} = require('../../utils/utils')
+  module.exports = function(req,res) {
+  
+     let { userToken } = req.fields
 
-let {User} = require('../../model/model')
+     let userId = varifyUserToken(userToken).data
+  
+     let file = req.files.fileRaw;
+  
+     let avatarImg = hostname+'/img/'+file.name
+  
+     fs.rename(file.path,path.join(dirname,'/public/img/'+file.name),()=>{
+  
+        let sql = `UPDATE user SET avatar = :avatarImg
 
-module.exports = function(req,res){
+        WHERE user_id = :userId`
 
-    let {userToken,fileRaw} = req.query
-
-    let userId = varifyUserToken(userToken).data
-
-     User.update({avatar:fileRaw},{
-
-            where:{
-
-                userId
-
-            }
-
-     }).then( () => {
-
-         User.findOne({
-
-             where:{
-
-                 userId
-
-             },
-
-             attributes:['avatar']
-
-         }).then( (result)=>{
-
-             res.send({
-
-                 status:1000,
-
-                 data:result
-
-             })
-
-         } )
-
+        originalQuery(sql,{ avatarImg,userId },'UPDATA').then( (result) => {
+      
+          res.json({
+      
+            status:1000,
+      
+            msg:'更新头像成功',
+      
+            data:result
+      
+          })
+      
+        } )
+        .catch((err) => {
+      
+          res.json({
+      
+            status: 1001,
+      
+            msg: '查询失败(服务器错误)',
+      
+            data: err
+      
+          })
+      
+        })
+  
      })
-
-
-}
+  
+  }

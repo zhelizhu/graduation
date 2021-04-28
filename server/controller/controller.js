@@ -46,6 +46,8 @@ let playAttention = require('./User/playAttention')
 
 let fans = require('./User/fans')
 
+let userLike = require('./Video/userLike')
+
 module.exports = {
     
     registerCon,
@@ -90,6 +92,8 @@ module.exports = {
 
     playAttention,
 
-    fans
+    fans,
+
+    userLike
 
 }

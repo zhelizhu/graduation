@@ -1,25 +1,25 @@
-<!-- attention-card -->
+<!-- user-card -->
 <template>
 
-    <div class='attention-card'>
+    <div class='user-card' @click="toUserHome(userInfo.user_id)">
 
-      <img class="via" :src="attention.avatar" alt="">
+      <img class="via" :src="userInfo.avatar" alt="">
 
       <div class="info">
 
-        <span class="info-title">{{attention.email}}</span>
+        <span class="info-title">{{userInfo.email}}</span>
 
-        <span class="info-content">{{attention.nickName}}</span>
+        <span class="info-content">{{userInfo.nickName}}</span>
 
       </div>
 
       <div class="att-btn">
 
-        <el-button v-if="mutually === 0" type="info" round @click="playAttention(attention.user_id)"><i class="el-icon-plus"></i>关注</el-button>
+        <el-button v-if="mutually === 0" type="info" round @click.stop="playAttention(userInfo.user_id)"><i class="el-icon-plus"></i>关注</el-button>
 
-        <el-button v-if="mutually === 1" type="success" round @click="cancelAttention(attention.user_id)">已关注</el-button>
+        <el-button v-if="mutually === 1" type="success" round @click.stop="cancelAttention(userInfo.user_id)">已关注</el-button>
 
-        <el-button v-if="mutually === 2" type="primary" round @click="cancelAttention(attention.user_id)"><i class="el-icon-plus"></i> 相互关注</el-button>
+        <el-button v-if="mutually === 2" type="primary" round @click.stop="cancelAttention(userInfo.user_id)"><i class="el-icon-plus"></i> 相互关注</el-button>
 
       </div>
 
@@ -35,7 +35,7 @@ export default {
 
    components: {},
 
-   props:['attention'],
+   props:['userInfo'],
 
    data() {
 
@@ -51,7 +51,7 @@ export default {
 
    watch: {
 
-     attention(val){
+     userInfo(val){
 
        this.mutually = val.mutually
 
@@ -60,6 +60,12 @@ export default {
    },
 
    methods: {
+
+     toUserHome(id){
+
+       this.$router.push('/userHome/'+id)
+
+     },
 
      playAttention(playAttentionId){
 
@@ -76,6 +82,8 @@ export default {
          this.$message.success(res.data.msg);
 
          this.$emit('reFindAttention')
+
+         this.$emit('reFindFans')
 
        } )
 
@@ -99,13 +107,13 @@ export default {
 
        } )
 
-     }
+     },
 
 
    },
    created() {
 
-     this.mutually = this.attention.mutually
+     this.mutually = this.userInfo.mutually
 
    },
 
@@ -117,7 +125,7 @@ export default {
 
 <style lang='less' scoped>
 
-.attention-card{
+.user-card{
 
   cursor: pointer;
 

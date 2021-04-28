@@ -8,15 +8,18 @@ module.exports = function(req,res){
 
   let userId = varifyUserToken(userToken).data
 
-  let sql = `SELECT * FROM user
+  let sql = `SELECT
 
-  WHERE user_id in (
+  u.user_id,email,nick_name,avatar,mutually
   
-  SELECT user_id FROM fansup
+  FROM  user as u
   
-  WHERE fans_id = :userId
+  INNER JOIN fansup as f
   
-  )
+  ON u.user_id = f.user_id
+  
+  WHERE f.fans_id = :userId
+  
   `
   originalQuery(sql,{ userId },'SELECT').then( (result) => {
 
@@ -42,6 +45,6 @@ module.exports = function(req,res){
 
     })
 
-})
+  })
 
 }

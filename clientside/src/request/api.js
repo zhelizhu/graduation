@@ -107,3 +107,19 @@ export const deleteVideo = (params) => {
     return postAxios('/videos/deleteVideo',params)
 
 }
+
+// 删除视频
+
+export const userLike = (params) => {
+
+    return getAxios('/videos/userLike',params)
+
+}
+
+// 上传头像
+
+export const userAvatar = (params) => {
+
+    return postAxios('/users/userAvatar',params)
+
+}

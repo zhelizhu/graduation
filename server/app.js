@@ -20,15 +20,9 @@ let clientsideRouter = require('./routes/clientside')
 
 var bodyParser = require('body-parser')
 
-// const formidable = require('express-formidable') // 引入
-
 let middleWare = require('./middleWare/intercept');
 
-// const { sequelize } = require('./model/user/user');
-
 var app = express();
-
-// app.use(formidable());  // 中间件
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -81,11 +75,6 @@ app.use('/videos',videosRouter)
 app.use('/utils',utilsRouter)
 app.use('/clientside',clientsideRouter)
 
-// app.get('/video/*',function(req,res){
-
-//   res.sendFile(__dirname+'/'+req.url)
-
-// })
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

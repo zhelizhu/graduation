@@ -8,19 +8,12 @@ module.exports = function(req,res){
 
   let userId = varifyUserToken(userToken).data
 
-  let sql = `SELECT
+  let sql = `SELECT * from video
 
-  u.user_id,email,nick_name,avatar,mutually
+  WHERE video_id in (SELECT video_id FROM userlike
   
-  FROM  user as u
-  
-  INNER JOIN fansup as f
-  
-  ON u.user_id = f.fans_id
-  
-  WHERE f.user_id = :userId
-  
-  `
+  WHERE user_id = :userId)`
+
   originalQuery(sql,{ userId },'SELECT').then( (result) => {
 
     res.json({
@@ -33,8 +26,7 @@ module.exports = function(req,res){
 
     })
 
-  } )
-  .catch((err) => {
+  } ).catch((err) => {
 
     res.json({
 
@@ -46,6 +38,6 @@ module.exports = function(req,res){
 
     })
 
-  })
+})
 
 }

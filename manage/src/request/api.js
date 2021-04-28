@@ -23,7 +23,7 @@ export const validCodeAxios = (params)=> {
 // 登录
 export const loginAxios = (params) => {
 
-    return postAxios('/users/login',params)
+    return getAxios('/users/login',params)
 
 }
 
@@ -38,7 +38,7 @@ export const UserListAxios = (params) => {
 
 export const UserDetailAxios = (params) => {
 
-    return postAxios('/users/userDetail',params)
+    return getAxios('/users/userDetail',params)
 
 }
 

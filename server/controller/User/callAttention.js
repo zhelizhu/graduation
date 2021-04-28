@@ -10,6 +10,22 @@ module.exports = function(req,res){
 
   console.log(userId,cancelUserId);
 
+  let sqlu = `
+      
+  UPDATE fansup SET mutually = 0
+
+  WHERE fans_id = :cancelUserId
+
+  AND user_id = :userId
+
+  `
+
+  originalQuery(sqlu,{ cancelUserId,userId },'UPDATA').then( () => {
+
+    // 把原来的变成1
+
+  } )
+
   let sql = `DELETE FROM fansup 
 
   WHERE fans_id = :userId AND

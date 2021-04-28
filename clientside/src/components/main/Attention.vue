@@ -3,7 +3,7 @@
 
     <div class='attention'>
 
-      <AttentionCard v-for="(item,index) in attention" :key="index" :attention="item" />
+      <UserCard @reFindAttention="findUserAttention" v-for="(item,index) in attention" :key="index" :userInfo="item" />
 
     </div>
 
@@ -11,17 +11,20 @@
 
 <script>
 
-import AttentionCard from '../util/AttentionCard'
+import { attention } from "../../request/api";
+
+// import AttentionCard from '../util/AttentionCard'
+
+import UserCard from '../util/UserCard'
 
 export default {
 
-   components: { AttentionCard },
-
-   props:['attention'],
+   components: { UserCard },
 
    data() {
        return {
 
+         attention:[]
 
        };
    },
@@ -32,8 +35,31 @@ export default {
 
    methods: {
 
+    findUserAttention(){
+
+       let query = {
+
+         userToken:localStorage.getItem('userToken')
+
+       }
+
+       attention(query).then( (res) => {
+
+            this.attention = res.data.data
+
+        } )
+        .catch((err) => {
+
+            console.log(err);
+
+        })
+
+    }
+
    },
    created() {
+
+     this.findUserAttention()
 
    },
 

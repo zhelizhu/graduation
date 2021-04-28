@@ -29,7 +29,7 @@ module.exports = function(req,res){
 
       (user_id,fans_id,mutually)
       
-      VALUES(:playAttentionId,:userId,0)
+      VALUES(:playAttentionId,:userId,1)
       `
 
     }
@@ -39,12 +39,29 @@ module.exports = function(req,res){
 
       (user_id,fans_id,mutually)
       
-      VALUES(:playAttentionId,:userId,1)
+      VALUES(:playAttentionId,:userId,2)
+      
       `
+
+      let sqlu = `
+      
+      UPDATE fansup SET mutually = 2
+
+      WHERE fans_id = :playAttentionId
+
+      AND user_id = :userId
+
+      `
+
+      originalQuery(sqlu,{ playAttentionId,userId },'UPDATA').then( () => {
+    
+        // 把原来的变成2
+    
+      } )
 
     }
 
-    originalQuery(sqli,{ playAttentionId,userId },'INSERT').then( (result) => {
+    originalQuery(sqli,{ playAttentionId,userId },'INSERT').then( (resulti) => {
     
       res.json({
   
@@ -52,7 +69,7 @@ module.exports = function(req,res){
   
         msg:'关注成功！',
   
-        data:result
+        data:resulti
   
       })
   

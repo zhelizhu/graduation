@@ -3,7 +3,7 @@
 
     <div class='fans'>
 
-      <FansCard v-for="(item,index) in fans" :key="index" :fans="item" />
+      <UserCard @reFindFans="findUserFans" v-for="(item,index) in fans" :key="index" :userInfo="item" />
 
     </div>
 
@@ -11,17 +11,20 @@
 
 <script>
 
-import FansCard from '../util/FansCard'
+// import FansCard from '../util/FansCard'
+
+import { fans } from "../../request/api";
+
+import UserCard from '../util/UserCard'
 
 export default {
 
-   components: { FansCard },
-
-   props:['fans'],
+   components: { UserCard },
 
    data() {
        return {
 
+         fans:[]
 
        };
    },
@@ -32,8 +35,31 @@ export default {
 
    methods: {
 
+    findUserFans(){
+
+        let params = {
+
+           userToken:localStorage.getItem('userToken')
+
+        }
+
+        fans(params).then( (res) => {
+
+              this.fans = res.data.data
+
+        } )
+        .catch((err) => {
+
+            console.log(err);
+
+        })
+
+    },
+
    },
    created() {
+
+      this.findUserFans()
 
    },
 

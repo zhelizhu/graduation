@@ -1,80 +1,50 @@
-<!-- my -->
+<!-- user-home -->
 <template>
 
-    <div class='my'>
+    <div class='user-home'>
 
-     <el-card class="my-card">
+      <el-card class="my-card">
 
-       <div class="login-out" @click="loginOut">
+            <div class="avatar">
+            
+                <el-avatar size="large" :src="userDetail.avatar"></el-avatar>
 
-        <el-tooltip class="item" effect="dark" content="退出登录" placement="top-start">
-               <i class="el-icon-s-fold"></i>
-        </el-tooltip>
+            </div>
 
-       </div>
+            <span class="my-username">{{userDetail.nickName}}</span>
 
-      <div class="avatar">
+            <span class="my-email">{{userDetail.email}}</span>
 
-          <el-avatar size="large" :src="cacheSrc"></el-avatar>
+            <ul class="user-info">
 
-          <el-upload
-              class="avatar-uploader"
-              action=''
-              :on-change="cacheAvatar"
-              :auto-upload="false"
-              :show-file-list="false">
-              <i class="el-icon-upload"></i>
-          </el-upload>
+              <li v-for="( info,index ) in userInfo" :key="index">
+              
+                  <div class="user-info-num">
+                  
+                      {{info.num}}
 
-      </div>
-    
-      <span class="my-username">{{userDetail.nickName}}</span>
+                  </div>
 
-      <span class="my-email">{{userDetail.email}}</span>
+                  <div class="user-info-title">
+                  
+                      {{info.title}}
 
-      <ul class="user-info">
+                  </div>
 
-          <li v-for="( info,index ) in userInfo" :key="index">
+              </li>
 
-              <div class="user-info-num">
+            </ul>
 
-                  {{info.num}}
-
-              </div>
-
-              <div class="user-info-title">
-
-                  {{info.title}}
-
-              </div>
-
-          </li>
-
-      </ul>
-
-     </el-card>
+      </el-card>
 
       <el-tabs type="border-card" class="my-tabs">
 
         <el-tab-pane>
+
           <span slot="label"><i class="el-icon-date"></i> 作品</span>
 
           <Production></Production>
           
-        </el-tab-pane>
-
-        <el-tab-pane>
-          <span slot="label"><i class="el-icon-date"></i> 关注</span>
-
-          <Attention></Attention>
-
-        </el-tab-pane>
-
-        <el-tab-pane>
-          <span slot="label"><i class="el-icon-date"></i> 粉丝</span>
-          
-          <Fans></Fans>
-            
         </el-tab-pane>
 
         <el-tab-pane>
@@ -85,14 +55,6 @@
 
         </el-tab-pane>
 
-        <el-tab-pane>
-
-          <span slot="label"><i class="el-icon-date"></i> 上传</span>
-
-          <UploadVideo></UploadVideo>
-          
-        </el-tab-pane>
-
       </el-tabs>
 
     </div>
@@ -101,58 +63,40 @@
 
 <script>
 
-import { userDetail,userAvatar } from "../../request/api";
-
-import UploadVideo from '../../components/main/UploadVideo'
-
-import Production from '../../components/main/Production'
-
-import Attention from '../../components/main/Attention'
-
-import Fans from '../../components/main/Fans'
-
-import UserLike from '../../components/main/UserLike'
+import { userDetail } from "../../request/api";
 
 export default {
 
-   components: { UploadVideo , Production , Attention , Fans , UserLike},
+   components: {},
 
    data() {
        return {
 
-           cacheSrc:'',
+          userDetail:{},
 
-           fileRaw:'',
-
-           userDetail:{},
-
-           attention:[],
-
-           fans:[],
-
-           userInfo:[
+          userInfo:[
 
                {
                    num:0,
                    title:'作品'
                },
                {
-                   num:0,
+                   num:7,
                    title:'粉丝'
                },
                {
-                   num:0,
+                   num:25,
                    title:'关注'
                }
 
            ],
 
-           userToken:localStorage.getItem('userToken'),
-
        };
    },
 
    computed: {},
+
+   watch: {},
 
    methods: {
 
@@ -160,15 +104,13 @@ export default {
 
       let params = {
 
-        userToken:this.userToken
+        userToken:this.$route.params.id
         
       }
 
       userDetail(params).then((res)=>{
 
         this.userDetail = res.data.data[0]
-
-        this.cacheSrc = this.userDetail.avatar
 
         this.userInfo[0].num = this.userDetail.uservideo
 
@@ -183,52 +125,24 @@ export default {
 
       })
 
-    },
-
-    loginOut() {
-
-      localStorage.removeItem('userToken')
-
-      this.$router.push('/login')
-
-    },
-
-    cacheAvatar(file){
-
-        this.fileRaw = file.raw
-
-        this.cacheSrc = URL.createObjectURL(file.raw);
-
-        let params = new FormData()
-
-        params.append('userToken', this.userToken);
-
-        params.append('fileRaw', this.fileRaw);
-
-        userAvatar(params).then((res)=>{
-
-          this.$message.success(res.data.msg);
-
-        })
-
     }
 
    },
    created() {
 
-      this.findUserDetail()
-        
+     this.findUserDetail()
+
+   },
+
+   mounted() {
+
    }
 }
 </script>
 
 <style lang='less' scoped>
 
-.my{
-
-    display: flex;
-
-    height: 100%;
+.user-home{
 
     .my-card{
 
