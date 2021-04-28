@@ -43,7 +43,7 @@
 
           <span slot="label"><i class="el-icon-date"></i> 作品</span>
 
-          <Production></Production>
+          <Production :production="production"></Production>
           
         </el-tab-pane>
 
@@ -51,7 +51,7 @@
           
           <span slot="label"><i class="el-icon-date"></i> 点赞</span>
 
-          <UserLike></UserLike>
+          <Production :production="userLike"></Production>
 
         </el-tab-pane>
 
@@ -63,16 +63,22 @@
 
 <script>
 
-import { userDetail } from "../../request/api";
+import { userDetail,production,userLike } from "../../request/api";
+
+import Production from '../../components/main/my/Production'
 
 export default {
 
-   components: {},
+   components: { Production },
 
    data() {
        return {
 
           userDetail:{},
+
+          production:[],
+
+          userLike:[],
 
           userInfo:[
 
@@ -125,12 +131,61 @@ export default {
 
       })
 
-    }
+    },
+
+    // 用户作品
+
+    findUserProduction() {
+
+      let query = {
+
+          userToken:this.$route.params.id
+
+      }
+
+      production(query).then( (res) => {
+
+          this.production = res.data.data
+
+      } )
+      .catch((err) => {
+
+          console.log(err);
+
+      })
+
+    },
+
+    // 用户喜欢
+
+    findUserLike(){
+
+      let query = {
+
+        userToken:this.$route.params.id
+
+      }
+
+      userLike(query).then((res) => {
+
+        this.userLike = res.data.data
+
+      }).catch((err) => {
+
+        console.log(err);
+
+      });
+
+    },
 
    },
    created() {
 
-     this.findUserDetail()
+     this.findUserDetail(),
+
+     this.findUserProduction(),
+
+     this.findUserLike()
 
    },
 

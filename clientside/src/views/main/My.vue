@@ -3,77 +3,28 @@
 
     <div class='my'>
 
-     <el-card class="my-card">
-
-       <div class="login-out" @click="loginOut">
-
-        <el-tooltip class="item" effect="dark" content="退出登录" placement="top-start">
-               <i class="el-icon-s-fold"></i>
-        </el-tooltip>
-
-       </div>
-
-      <div class="avatar">
-
-          <el-avatar size="large" :src="cacheSrc"></el-avatar>
-
-          <el-upload
-              class="avatar-uploader"
-              action=''
-              :on-change="cacheAvatar"
-              :auto-upload="false"
-              :show-file-list="false">
-              <i class="el-icon-upload"></i>
-          </el-upload>
-
-      </div>
-    
-      <span class="my-username">{{userDetail.nickName}}</span>
-
-      <span class="my-email">{{userDetail.email}}</span>
-
-      <ul class="user-info">
-
-          <li v-for="( info,index ) in userInfo" :key="index">
-
-              <div class="user-info-num">
-
-                  {{info.num}}
-
-              </div>
-
-              <div class="user-info-title">
-
-                  {{info.title}}
-
-              </div>
-
-          </li>
-
-      </ul>
-
-     </el-card>
+      <UserDetail></UserDetail>
 
       <el-tabs type="border-card" class="my-tabs">
 
         <el-tab-pane>
           <span slot="label"><i class="el-icon-date"></i> 作品</span>
 
-          <Production></Production>
+          <Production :production="production" @reFindUserProduction="reFindUserProduction" :proOrLike="0"></Production>
           
         </el-tab-pane>
 
         <el-tab-pane>
           <span slot="label"><i class="el-icon-date"></i> 关注</span>
 
-          <Attention></Attention>
+          <Attention :attention="attention" @reFindAttention="reFindAttention"></Attention>
 
         </el-tab-pane>
 
         <el-tab-pane>
           <span slot="label"><i class="el-icon-date"></i> 粉丝</span>
           
-          <Fans></Fans>
+          <Attention :attention="fans" @reFindAttention="reFindAttention"></Attention>
             
         </el-tab-pane>
 
@@ -81,7 +32,7 @@
           
           <span slot="label"><i class="el-icon-date"></i> 点赞</span>
 
-          <UserLike></UserLike>
+           <Production :production="userLike" @reFindUserProduction="reFindUserProduction" :proOrLike="1"></Production>
 
         </el-tab-pane>
 
@@ -101,53 +52,30 @@
 
 <script>
 
-import { userDetail,userAvatar } from "../../request/api";
+import { production,attention,fans,userLike } from "@/request/api";
 
-import UploadVideo from '../../components/main/UploadVideo'
+import UserDetail from '../../components/main/my/userDetail'
 
-import Production from '../../components/main/Production'
+import Production from '../../components/main/my/Production'
 
-import Attention from '../../components/main/Attention'
+import Attention from '../../components/main/my/Attention'
 
-import Fans from '../../components/main/Fans'
-
-import UserLike from '../../components/main/UserLike'
+import UploadVideo from '../../components/main/my/UploadVideo'
 
 export default {
 
-   components: { UploadVideo , Production , Attention , Fans , UserLike},
+   components: { UserDetail,Production,Attention,UploadVideo},
 
    data() {
        return {
 
-           cacheSrc:'',
+         production:[],
 
-           fileRaw:'',
+         attention:[],
 
-           userDetail:{},
+         fans:[],
 
-           attention:[],
-
-           fans:[],
-
-           userInfo:[
-
-               {
-                   num:0,
-                   title:'作品'
-               },
-               {
-                   num:0,
-                   title:'粉丝'
-               },
-               {
-                   num:0,
-                   title:'关注'
-               }
-
-           ],
-
-           userToken:localStorage.getItem('userToken'),
+         userLike:[]
 
        };
    },
@@ -156,68 +84,128 @@ export default {
 
    methods: {
 
-    findUserDetail() {
+      // 用户作品
 
-      let params = {
+      findUserProduction() {
 
-        userToken:this.userToken
-        
-      }
+          let query = {
 
-      userDetail(params).then((res)=>{
+              userToken:localStorage.getItem('userToken')
 
-        this.userDetail = res.data.data[0]
+          }
 
-        this.cacheSrc = this.userDetail.avatar
+          production(query).then( (res) => {
 
-        this.userInfo[0].num = this.userDetail.uservideo
+              this.production = res.data.data
 
-        this.userInfo[1].num = this.userDetail.fans
+          } )
+          .catch((err) => {
 
-        this.userInfo[2].num = this.userDetail.attention
+              console.log(err);
 
-      })
-      .catch((err)=>{
+          })
 
-        console.log(err);
+      },
 
-      })
+      // 用户关注
 
-    },
+      findUserAttention(){
 
-    loginOut() {
+       let query = {
 
-      localStorage.removeItem('userToken')
+         userToken:localStorage.getItem('userToken')
 
-      this.$router.push('/login')
+       }
 
-    },
+       attention(query).then( (res) => {
 
-    cacheAvatar(file){
+            this.attention = res.data.data
 
-        this.fileRaw = file.raw
+        } )
+        .catch((err) => {
 
-        this.cacheSrc = URL.createObjectURL(file.raw);
-
-        let params = new FormData()
-
-        params.append('userToken', this.userToken);
-
-        params.append('fileRaw', this.fileRaw);
-
-        userAvatar(params).then((res)=>{
-
-          this.$message.success(res.data.msg);
+            console.log(err);
 
         })
 
-    }
+      },
+
+      // 用户粉丝
+
+      findUserFans(){
+
+        let params = {
+
+           userToken:localStorage.getItem('userToken')
+
+        }
+
+        fans(params).then( (res) => {
+
+              this.fans = res.data.data
+
+        } )
+        .catch((err) => {
+
+            console.log(err);
+
+        })
+
+      },
+      
+      // 刷新用户关注\粉丝
+
+      reFindAttention(){
+
+        this.findUserAttention()
+
+        this.findUserFans()
+
+      },
+
+      // 用户喜欢
+
+      findUserLike(){
+
+        let query = {
+
+          userToken: localStorage.getItem('userToken')
+
+        }
+
+        userLike(query).then((res) => {
+
+          this.userLike = res.data.data
+
+        }).catch((err) => {
+
+          console.log(err);
+
+        });
+
+      },
+
+      // 刷新用户喜欢
+
+      reFindUserProduction(){
+
+        this.findUserProduction()
+
+        this.findUserLike()
+
+      }
 
    },
    created() {
 
-      this.findUserDetail()
-        
+      this.findUserProduction()
+
+      this.findUserAttention()
+
+      this.findUserFans(),
+
+      this.findUserLike()
+    
    }
 }
 </script>
@@ -229,120 +217,6 @@ export default {
     display: flex;
 
     height: 100%;
-
-    .my-card{
-
-        position: relative;
-
-        display: flex;
-
-        align-items: center;
-
-        margin-right:10px;
-
-        flex-shrink: 0;
-
-        flex-basis: 300px;
-
-        .login-out{
-
-          position: absolute;
-
-          left: 0;
-
-          top: 0;
-
-          i{
-
-            font-size: 40px;
-
-          }
-
-        }
-
-        .avatar{
-
-          position: relative;
-
-        }
-
-        ::v-deep.avatar-uploader{
-          
-          position: absolute;
-
-          left: 0;
-
-          top: 0;
-
-          i{
-
-              opacity: 0;
-
-              width: 100px;
-
-              height: 100px;
-
-          }
-
-        }
-
-        ::v-deep.el-card__body{
-
-            width: 100%;
-
-            height: 50%;
-
-            padding: 20px 0;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: space-around;
-
-            .el-avatar--large{
-
-                width: 100px;
-
-                height: 100px;
-
-            }
-
-        }
-
-        .my-username,.my-email{
-
-            font-size: 25px;
-
-        }
-
-        .user-info{
-
-            display: flex;
-
-            .user-info-num,.user-info-title{
-
-                height: 40px;
-
-                line-height: 40px;
-
-                padding: 0 40px;
-
-            }
-
-            .user-info-num{
-
-                font-size: 25px;
-
-                font-weight: 700;
-
-            }
-
-        }
-
-    }
 
     .my-tabs{
 

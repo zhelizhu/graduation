@@ -7,23 +7,13 @@ module.exports = function(req,res){
 
     let {userToken} = req.query
 
-    console.log(userToken);
-
     let userId = varifyUserToken(userToken).data
-
-    console.log(userId);
 
     if (userId == undefined) {
 
       userId = userToken
 
-      console.log(userId);
-
-      console.log(1);
-
     }
-
-    // console.log(userId);
 
     let sql = `WITH 
     userInfo AS (SELECT user_id,email,nick_name,sex,avatar

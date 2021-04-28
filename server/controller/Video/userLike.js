@@ -8,6 +8,12 @@ module.exports = function(req,res){
 
   let userId = varifyUserToken(userToken).data
 
+  if (userId == undefined) {
+
+    userId = userToken
+
+  }
+
   let sql = `SELECT * from video
 
   WHERE video_id in (SELECT video_id FROM userlike

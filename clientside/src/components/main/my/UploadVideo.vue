@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { uploadVideo } from "../../request/api";
+import { uploadVideo } from "@/request/api";
 
 export default {
   components: {},

@@ -36,7 +36,7 @@ import { mapState,mapMutations} from 'vuex'
 
 export default {
 
-  props:['video'],
+  props:['video','proOrLike'],
 
   methods:{
 
@@ -56,7 +56,9 @@ export default {
 
            userToken:localStorage.getItem('userToken'),
 
-           videoId
+           videoId,
+
+           proOrLike:this.proOrLike
 
         }
 

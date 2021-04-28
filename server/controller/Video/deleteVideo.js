@@ -12,71 +12,115 @@ module.exports = function(req,res) {
 
         userToken,
 
-        videoId
+        videoId,
+
+        proOrLike
 
     } = req.body
 
     let userId = varifyUserToken(userToken).data
 
-    console.log(userId,videoId);
+    console.log(userId,videoId,proOrLike);
     
-    let sql = `DELETE FROM video
+    if (proOrLike == 0) {
+      
+      let sql = `DELETE FROM video
 
-    WHERE video_id = :videoId`
+      WHERE video_id = :videoId`
+      
+      originalQuery(sql,{ videoId },'DELETE').then( (result) => {
 
-    originalQuery(sql,{ videoId },'DELETE').then( (result) => {
+          let sql = `
 
-        let sql = `
+          DELETE FROM videouser
+
+          WHERE 
+
+          video_id = :videoId AND 
+
+          user_id = :userId
+
+          ` 
+      
+          originalQuery(sql,{ videoId,userId },'DELETE').then( (result) => {
+          
+            res.json({
+            
+              status:1000,
+            
+              msg:'删除成功',
+            
+              data:result
+            
+            })
+          
+          } ).catch((err) => {
+          
+            res.json({
+            
+              status: 1001,
+            
+              msg: '查询失败(服务器错误)',
+            
+              data: err
+            
+            })
+          
+        })
+      
+      
+      } ).catch((err) => {
+      
+        res.json({
         
-        DELETE FROM videouser
-
-        WHERE 
+          status: 1001,
         
-        video_id = :videoId AND 
+          msg: '查询失败(服务器错误)',
         
-        user_id = :userId
-
-        ` 
-    
-        originalQuery(sql,{ videoId,userId },'DELETE').then( (result) => {
-      
-          res.json({
-      
-            status:1000,
-      
-            msg:'删除成功',
-      
-            data:result
-      
-          })
-      
-        } ).catch((err) => {
-      
-          res.json({
-      
-            status: 1001,
-      
-            msg: '查询失败(服务器错误)',
-      
-            data: err
-      
-          })
+          data: err
+        
+        })
       
       })
-  
-  
-    } ).catch((err) => {
-  
-      res.json({
-  
-        status: 1001,
-  
-        msg: '查询失败(服务器错误)',
-  
-        data: err
-  
-      })
-  
-  })
+
+    }
+
+    if (proOrLike == 1) {
+
+      let sql = `DELETE FROM userlike
+
+      WHERE video_id = :videoId 
+      
+      AND user_id = :userId
+
+      `
+      originalQuery(sql,{ videoId,userId },'DELETE').then( (result) => {
+
+        res.json({
         
+          status: 1001,
+        
+          msg: '取消赞成功',
+        
+          data: result
+        
+        })
+
+      
+      } ).catch((err) => {
+      
+        res.json({
+        
+          status: 1001,
+        
+          msg: '查询失败(服务器错误)',
+        
+          data: err
+        
+        })
+      
+      })
+      
+    }
+
 }
