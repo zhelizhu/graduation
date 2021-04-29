@@ -5,11 +5,53 @@
 
       <div class="in">
 
-        <!-- <vue-core-video-player :src="videoSrc" :autoplay="true"></vue-core-video-player> -->
+        <div class="video-body">
 
-        <video class="video" controls autoplay :src="videoSrc"></video>
+          <video class="video" controls  :src="videoBody.video_src"></video>
 
-        <!-- <video-player :src="videoSrc"></video-player> -->
+        </div>
+
+        <div class="video-info">
+
+          <UserCard :userInfo="videoInfo" @reFindAttention="reFindAttention"></UserCard>
+
+          <div class="video-info-main">
+
+            <div class="video-name">{{videoBody.video_name}}</div>
+
+            <div class="video-msg">{{videoBody.video_info}}</div>
+
+            <div class="video-time">{{videoBody.created_at}}</div>
+
+          </div>
+
+          <div class="video-do">
+
+            <div class="video-like">
+
+              <i class="el-icon-star-on"></i>
+
+              <span>{{videoBody.support_sum}}</span>
+
+            </div>
+
+            <div class="video-nolike">
+
+              <i class="el-icon-warning"></i>
+
+              <span>{{videoBody.oppose_sum}}</span>
+
+            </div>
+
+          </div>
+
+          <div class="video-comment">
+          
+          
+          
+          </div>
+
+        </div>
 
         <div class="close" @click="close">
 
@@ -25,11 +67,13 @@
 
 <script>
 
-import { mapMutations } from 'vuex'
+import { mapState,mapMutations } from 'vuex'
+
+import UserCard from './UserCard'
 
 export default {
 
-   components: {},
+   components: { UserCard },
 
    data() {
 
@@ -41,35 +85,32 @@ export default {
 
    computed: {
 
-     videoSrc(){
-
-       return this.$store.state.videoSrc
-
-     }
+     ...mapState(['videoBody','videoInfo','comment'])
 
    },
 
    methods:{
 
-     ...mapMutations(['setVideoSrc','setIsPlay']),
+     ...mapMutations(['setvideoBody','setIsPlay']),
 
      close(){
 
-       this.setVideoSrc('')
+       this.setvideoBody({})
 
        this.setIsPlay(false)
 
+     },
+
+     reFindAttention(){
+       
      }
 
    },
 
-   watch: {
+   watch: {},
 
-   },
-   created(){
+   created(){}
 
-
-   }
 }
 </script>
 
@@ -101,11 +142,75 @@ export default {
 
       align-items: center;
 
-      min-width: calc(100vw/3);
+      justify-content: space-between;
 
-      .video{
+      width: 100%;
 
-        height: 95vh;
+      .video-body{
+
+        flex: 1;
+
+        display: flex;
+
+        justify-content: center;
+
+        .video{
+
+          height: 100vh;
+
+        }
+
+      }
+
+      .video-info{
+
+        display: flex;
+
+        flex-direction: column;
+
+        width: 500px;
+
+        height: 100%;
+  
+        color: #fff;
+
+        .user-card{
+
+          height: 60px;
+
+          width: 100%;
+
+        }
+
+        .video-info-main{
+
+          display: flex;
+
+          justify-content: space-around;
+
+        }
+
+        .video-do{
+
+          display: flex;
+
+          font-size: 20px;
+
+          padding: 10px;
+
+          i{
+
+            margin: 0 10px;
+
+          }
+
+          .video-like,.video-nolike{
+
+            margin: 0 10px;
+
+          }
+
+        }
 
       }
 
@@ -115,7 +220,7 @@ export default {
 
     position: absolute;
 
-    right: 50px;
+    left: 50px;
 
     top: 50px;
 

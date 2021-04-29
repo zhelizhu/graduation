@@ -8,6 +8,7 @@
         :key="index" 
         :video="pro"
         :proOrLike="proOrLike"
+        :isShowDel="isShowDel"
         @reFindUserProduction="reFindUserProduction"
       />
 
@@ -23,7 +24,7 @@ export default {
 
    components: { VideoCard },
 
-   props:['production','proOrLike'],
+   props:['production','proOrLike','isShowDel'],
 
    data() {
        return {

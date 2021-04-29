@@ -55,7 +55,7 @@ import  validator  from '../../assets/js/validator'
 
 import  DragValidator from '../../components/user/DragValidator'
 
-import {mapState} from 'vuex'
+import { mapState} from 'vuex'
 
 import {loginAxios} from '../../request/api'
 
@@ -160,6 +160,8 @@ export default {
                              this.$message.success(res.data.msg)
 
                              localStorage.setItem('userToken',res.data.token,'1d')
+
+                             localStorage.setItem('userId',res.data.userId,'1d')
 
                              this.$router.push('/')
 

@@ -123,3 +123,27 @@ export const userAvatar = (params) => {
     return postAxios('/users/userAvatar',params)
 
 }
+
+// 当前视频用户信息
+
+export const videoInfo = (params) => {
+
+    return getAxios('/videos/videoInfo',params)
+
+}
+
+// 当前视频评论
+
+export const videoComment = (params) => {
+
+    return getAxios('/videos/videoComment',params)
+
+}
+
+// 用户点击喜欢
+
+export const likeVideo = (params) => {
+
+    return postAxios('/videos/likeVideo',params)
+
+}

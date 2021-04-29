@@ -1,14 +1,8 @@
 let { originalQuery } = require('../../utils/utils')
 
-let {varifyUserToken} = require('../../utils/utils')
-
 module.exports = function(req,res){
 
-  let { userToken ,cancelUserId} = req.body
-
-  let userId = varifyUserToken(userToken).data
-
-  console.log(userId,cancelUserId);
+  let { userId ,cancelUserId} = req.body
 
   let sqlu = `
       

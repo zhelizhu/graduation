@@ -4,20 +4,7 @@ module.exports = function(req,res){
 
   let params = req.query
 
-  let sql = `SELECT
-  
-  film_id as fid,
-
-  film_src as filmSrc,
-
-  film_bg_src as filmBgSrc,
-
-  film_name as filmName,
-
-  film_info as filmInfo
-
-FROM film`
-
+  let sql = `SELECT * FROM banner`
 
   originalQuery(sql,params,'SELECT').then( (result) => {
 

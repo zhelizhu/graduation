@@ -43,7 +43,7 @@
 
           <span slot="label"><i class="el-icon-date"></i> 作品</span>
 
-          <Production :production="production"></Production>
+          <Production :production="production" ></Production>
           
         </el-tab-pane>
 
@@ -87,11 +87,11 @@ export default {
                    title:'作品'
                },
                {
-                   num:7,
+                   num:0,
                    title:'粉丝'
                },
                {
-                   num:25,
+                   num:0,
                    title:'关注'
                }
 
@@ -110,7 +110,7 @@ export default {
 
       let params = {
 
-        userToken:this.$route.params.id
+        userId:this.$route.params.id
         
       }
 
@@ -139,7 +139,7 @@ export default {
 
       let query = {
 
-          userToken:this.$route.params.id
+          userId:this.$route.params.id
 
       }
 
@@ -162,7 +162,7 @@ export default {
 
       let query = {
 
-        userToken:this.$route.params.id
+        userId:this.$route.params.id
 
       }
 

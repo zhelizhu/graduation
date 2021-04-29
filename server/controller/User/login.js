@@ -40,7 +40,9 @@ module.exports = function (req, res){
     
                     msg:'恭喜你,登录成功！',
 
-                    token
+                    token,
+
+                    userId:result[0].dataValues.userId
     
                 })
                 

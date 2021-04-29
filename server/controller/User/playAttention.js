@@ -1,12 +1,8 @@
 let { originalQuery } = require('../../utils/utils')
 
-let {varifyUserToken} = require('../../utils/utils')
-
 module.exports = function(req,res){
 
-  let { userToken ,playAttentionId} = req.body
-
-  let userId = varifyUserToken(userToken).data
+  let { userId ,playAttentionId} = req.body
 
   let sql = `
   

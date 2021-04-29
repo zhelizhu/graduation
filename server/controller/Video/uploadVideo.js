@@ -6,15 +6,11 @@ let fs = require('fs')
 
 let path = require('path')
 
-let {varifyUserToken} = require('../../utils/utils')
-
 module.exports = function(req,res) {
 
    let videoId = 'v_' + (+new Date)
 
-   let { videoName,videoInfo,videoType,userToken} = req.fields
-
-   let userId = varifyUserToken(userToken).data
+   let { videoName,videoInfo,videoType,userId} = req.fields
 
    let file = req.files.videoBody;
 

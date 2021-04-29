@@ -71,7 +71,7 @@ export default {
 
        let params = {
 
-         userToken:localStorage.getItem('userToken'),
+         userId:localStorage.getItem('userId'),
 
          playAttentionId
 
@@ -83,8 +83,6 @@ export default {
 
          this.$emit('reFindAttention')
 
-         this.$emit('reFindFans')
-
        } )
 
      },
@@ -93,7 +91,7 @@ export default {
 
        let params = {
 
-         userToken:localStorage.getItem('userToken'),
+         userId:localStorage.getItem('userId'),
 
          cancelUserId
 
@@ -108,7 +106,6 @@ export default {
        } )
 
      },
-
 
    },
    created() {
@@ -131,6 +128,8 @@ export default {
 
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 
+  background: #fff;
+
   padding: 15px;
 
   margin: 5px;
@@ -146,6 +145,10 @@ export default {
   justify-content: space-around;
 
   .via{
+
+    width: 60px;
+
+    height: 60px;
 
     max-width: 60px;
 

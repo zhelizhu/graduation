@@ -3,16 +3,11 @@
 
     <div class='banner'>
 
-      <el-carousel trigger="click" height="500px">
+      <el-carousel trigger="click" type="card" height="500px" :interval="4000">
+        
         <el-carousel-item v-for="(item,index) in carousel" :key="index">
 
-          <el-image
-          :src="item.filmBgSrc"
-          >
-           <div slot="error" class="image-slot">
-              <i class="el-icon-picture-outline"></i>
-            </div>
-          </el-image>
+            <video class="banner-video" :src="item.banner_src" autoplay loop></video>
 
         </el-carousel-item>
       </el-carousel>
@@ -77,11 +72,11 @@ export default {
 
 <style lang='less' scoped>
 
-.el-image{
+.banner-video{
 
-  width: 100%;
-
-  height: 100%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 
 }
 

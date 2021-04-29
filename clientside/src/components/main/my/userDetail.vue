@@ -107,7 +107,7 @@ export default {
 
       let params = {
 
-        userToken:this.userToken
+        userId:localStorage.getItem('userId')
         
       }
 
@@ -137,6 +137,8 @@ export default {
     loginOut() {
 
       localStorage.removeItem('userToken')
+
+      localStorage.removeItem('userId')
 
       this.$router.push('/login')
 

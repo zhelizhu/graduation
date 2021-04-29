@@ -10,7 +10,7 @@
         <el-tab-pane>
           <span slot="label"><i class="el-icon-date"></i> 作品</span>
 
-          <Production :production="production" @reFindUserProduction="reFindUserProduction" :proOrLike="0"></Production>
+          <Production :production="production" @reFindUserProduction="reFindUserProduction" :proOrLike="0" :isShowDel="0"></Production>
           
         </el-tab-pane>
 
@@ -32,7 +32,7 @@
           
           <span slot="label"><i class="el-icon-date"></i> 点赞</span>
 
-           <Production :production="userLike" @reFindUserProduction="reFindUserProduction" :proOrLike="1"></Production>
+           <Production :production="userLike" @reFindUserProduction="reFindUserProduction" :proOrLike="1" :isShowDel="1"></Production>
 
         </el-tab-pane>
 
@@ -69,6 +69,8 @@ export default {
    data() {
        return {
 
+         userId:localStorage.getItem('userId'),
+
          production:[],
 
          attention:[],
@@ -90,11 +92,13 @@ export default {
 
           let query = {
 
-              userToken:localStorage.getItem('userToken')
+              userId:this.userId
 
           }
 
           production(query).then( (res) => {
+
+              console.log(res);
 
               this.production = res.data.data
 
@@ -113,7 +117,7 @@ export default {
 
        let query = {
 
-         userToken:localStorage.getItem('userToken')
+         userId:this.userId
 
        }
 
@@ -136,7 +140,7 @@ export default {
 
         let params = {
 
-           userToken:localStorage.getItem('userToken')
+           userId:this.userId
 
         }
 
@@ -169,7 +173,7 @@ export default {
 
         let query = {
 
-          userToken: localStorage.getItem('userToken')
+          userId: this.userId
 
         }
 

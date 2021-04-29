@@ -1,8 +1,3 @@
-let {
-    Video
-  } = require('../../model/model')
-
-let {varifyUserToken} = require('../../utils/utils')
 
 let { originalQuery } = require('../../utils/utils')
 
@@ -10,17 +5,13 @@ module.exports = function(req,res) {
 
     let {
 
-        userToken,
+        userId,
 
         videoId,
 
         proOrLike
 
     } = req.body
-
-    let userId = varifyUserToken(userToken).data
-
-    console.log(userId,videoId,proOrLike);
     
     if (proOrLike == 0) {
       

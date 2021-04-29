@@ -88,7 +88,7 @@ export default {
 
       form: {
 
-        userToken:localStorage.getItem('userToken'),
+        userId:localStorage.getItem('userId'),
 
         videoName: "",
 
@@ -137,12 +137,6 @@ export default {
         this.cacheSrc = URL.createObjectURL(file.raw);
 
         this.form.videoName = file.raw.name.split('.')[0]
-
-        // setTimeout(()=>{
-
-        //   this.findvideocover()
-
-        // },200)
 
     },
 

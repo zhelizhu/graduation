@@ -2,23 +2,25 @@ let { originalQuery } = require('../../utils/utils')
 
 module.exports = function(req,res){
 
-  let { userId } = req.query
+  let { userId,videoId } = req.body
 
-  let sql = `SELECT * FROM video v
-
-  WHERE v.video_id 
+  let sql = `
   
-  in (SELECT video_id FROM videouser vs
+  INSERT INTO userlike 
   
-  WHERE vs.user_id = :userId)`
+  SET user_id = :userId,
 
-  originalQuery(sql,{ userId },'SELECT').then( (result) => {
+  video_id = :videoId
+  
+  `
+
+  originalQuery(sql,{ userId,videoId },'INSERT').then( (result) => {
 
     res.json({
 
       status:1000,
 
-      msg:'查询成功',
+      msg:'点赞成功',
 
       data:result
 

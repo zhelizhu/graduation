@@ -27,7 +27,7 @@
 
       </el-container>
 
-      <Play v-show="isPlay"></Play>
+      <Play v-if="isPlay"></Play>
 
     </div>
 

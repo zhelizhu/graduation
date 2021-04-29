@@ -15,10 +15,11 @@
 
         <div class="mask">
 
-          <i class="el-icon-reading" @click="playVideo(video.video_src)"></i>
+          <i class="el-icon-reading" @click="playVideo(video)"></i>
 
-          <i class="el-icon-delete" @click="deleteUserVideo(video.video_id)"></i>
+          <i v-if="isShowDel == 0" class="el-icon-delete" @click="doUserVideo(video.video_id)"></i>
 
+          <i v-if="isShowDel == 1" :class="isLike" @click="doUserVideo(video.video_id)"></i>
 
         </div>
 
@@ -30,51 +31,21 @@
 
 import { fontFilter } from '../../filter/fontFilter'
 
-import { deleteVideo } from '../../request/api'
+import { deleteVideo,videoInfo,videoComment,likeVideo } from '@/request/api'
 
 import { mapState,mapMutations} from 'vuex'
 
 export default {
 
-  props:['video','proOrLike'],
+  props:['video','proOrLike','isShowDel'],
 
-  methods:{
+  data(){
 
-    ...mapMutations(['setVideoSrc','setIsPlay']),
+    return{
 
-    playVideo(vSrc){
+      userId:localStorage.getItem('userId'),
 
-      this.setVideoSrc(vSrc)
-
-      this.setIsPlay(true)
-
-    },
-
-    deleteUserVideo(videoId){
-
-        let params = {
-
-           userToken:localStorage.getItem('userToken'),
-
-           videoId,
-
-           proOrLike:this.proOrLike
-
-        }
-
-        deleteVideo(params).then( (res) => {
-
-             this.$message.success(res.data.msg);
-
-             this.$emit('reFindUserProduction')
-
-        } )
-        .catch((err) => {
-
-            console.log(err);
-
-        })
-
+      isLike:'el-icon-star-on'
 
     }
 
@@ -82,7 +53,128 @@ export default {
 
   computed:{
 
-    ...mapState(['videoSrc'])
+    ...mapState(['videoSrc','videoInfo'])
+
+  },
+
+  methods:{
+
+    ...mapMutations(['setvideoBody','setIsPlay','setCurrentUserId','setVideoInfo','setComment']),
+
+    playVideo(video){
+
+        this.setvideoBody(video)
+
+        this.findVideosInfo(video.video_id)
+
+        this.findVideoComment(video.video_id)
+
+        this.setIsPlay(true)
+
+    },
+
+    doUserVideo(videoId){
+
+        if (this.isLike == 'el-icon-star-off') {
+
+          this.isLike = 'el-icon-star-on'
+
+          let params = {
+
+              userId:this.userId,
+
+              videoId,
+
+          }
+
+          likeVideo(params).then( (res) => {
+            
+               this.$message.success(res.data.msg);
+
+          } )
+          .catch((err) => {
+          
+              console.log(err);
+
+          })
+
+          
+        }
+
+        else{
+
+            let params = {
+            
+               userId:this.userId,
+
+               videoId,
+
+               proOrLike:this.proOrLike
+
+            }
+
+            deleteVideo(params).then( (res) => {
+            
+                 this.$message.success(res.data.msg);
+
+            } )
+            .catch((err) => {
+            
+                console.log(err);
+
+            })
+
+            this.isLike = 'el-icon-star-off'
+
+        }
+
+    },
+
+    findVideosInfo(videoId){
+
+      let query = {
+
+        userId:this.userId,
+
+        videoId
+
+      }
+
+      videoInfo(query).then( (res)=>{
+
+        this.setVideoInfo(res.data.data)
+
+        console.log(this.videoInfo);
+
+      } )
+      .catch( (err)=>{
+
+        console.log(err);
+
+      } ) 
+
+    },
+
+    findVideoComment(videoId){
+
+      let query = {
+
+        videoId
+
+      }
+
+      videoComment(query).then( (res)=>{
+
+        this.setComment(res.data.data)
+
+      } )
+      .catch( (err)=>{
+
+        console.log(err);
+
+      } ) 
+
+    }
 
   },
 
@@ -204,6 +296,12 @@ export default {
           color: #1296da;
 
         }
+
+      }
+
+      .el-icon-star-on{
+
+        color: #1296da;
 
       }
 

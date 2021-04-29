@@ -48,6 +48,12 @@ let fans = require('./User/fans')
 
 let userLike = require('./Video/userLike')
 
+let videoInfo = require('./Video/videoInfo')
+
+let videoComment = require('./Video/videoComment')
+
+let likeVideo = require('./Video/likeVideo')
+
 module.exports = {
     
     registerCon,
@@ -94,6 +100,12 @@ module.exports = {
 
     fans,
 
-    userLike
+    userLike,
+
+    videoInfo,
+
+    videoComment,
+
+    likeVideo
 
 }
