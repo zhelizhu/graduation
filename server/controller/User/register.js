@@ -7,6 +7,8 @@ let {
   enCodeString
 } = require('../../utils/utils')
 
+let { originalQuery } = require('../../utils/utils')
+
 module.exports = function (req, res) {
 
   let {
@@ -19,6 +21,8 @@ module.exports = function (req, res) {
   // 用户注册
 
   let userId = 'u_' + (+new Date)
+
+  let password = enCodeString(userPwd)
 
   ValidCode.findAll({
 
@@ -44,70 +48,55 @@ module.exports = function (req, res) {
       
     }
     else{
-
+ 
       if(result[0].dataValues.email === userEmail && result[0].dataValues.validCode === uservalidCode){
-  
-        User.findAll({
-  
-          where: {
-  
-            email: userEmail
-  
-          },
-  
-        })
-  
-        .then((result) => {
-  
-        if (result.length === 0) {
-  
-            User.create({
-  
-              userId,
-  
-              email: userEmail,
-  
-              password: enCodeString(userPwd)
-  
-            }).then((resoult) => {
-  
-              res.json({
-  
-                status: 1000,
-  
-                msg: '注册成功',
-  
-                data: resoult
-  
-              })
-  
-            }).catch((err) => {
-  
-              res.json({
-  
-                status: 1001,
-  
-                msg: '注册失败(服务器错误)',
-  
-                data: err
-  
-              })
-  
-            })
-  
-        } 
-        else {
-  
-            res.json({
-  
-              status: 1002,
-  
-              msg: '注册失败(邮箱已被注册！)'
-  
-            })
-  
-        }
-  
+
+        console.log(userEmail);
+
+        let sql = `SELECT user_id FROM user 
+        
+        WHERE email = :userEmail
+        
+        `
+        originalQuery(sql,{ userEmail },'SELECT').then( (result) => {
+
+            if (result.length === 0) {
+
+                let sql = `INSERT INTO user SET user_id = :userId,
+                
+                email = :userEmail,
+
+                nick_name = '请输入您的昵称',
+
+                password = :password
+
+                `
+                originalQuery(sql,{ userId,userEmail,password },'INSERT').then( (result) => {
+
+                    res.json({
+                    
+                      status: 1000,
+                    
+                      msg: '注册成功',
+                    
+                      data: result
+                    
+                    })
+
+                })
+            } 
+            else {
+            
+                res.json({
+                
+                  status: 1002,
+                
+                  msg: '注册失败(邮箱已被注册！)'
+                
+                })
+              
+            }
+          
         })
   
       }

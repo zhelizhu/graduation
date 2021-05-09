@@ -11,8 +11,6 @@ const VideoUser = require('./video/videoUser')
 
 const FansUp = require('./user/fansUp')
 
-const Film = require('./video/film')
-
 const Comment = require('./user/comment')
 
 const userLike = require('./user/userLike')
@@ -30,8 +28,6 @@ module.exports = {
     VideoUser,
 
     FansUp,
-
-    Film,
 
     Comment,
 

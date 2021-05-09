@@ -5,5 +5,5 @@ let banner = require('./Main/banner')
 module.exports = {
     
   banner
-
+  
 }

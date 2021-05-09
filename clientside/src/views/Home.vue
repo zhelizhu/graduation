@@ -5,7 +5,7 @@
 
       <el-container>
 
-        <el-aside width="80px">
+        <el-aside width="60px">
 
           <Aside></Aside>
           
@@ -83,6 +83,7 @@ export default {
 
 }
 
+
 .el-header, .el-footer {
   background-color: #B3C0D1;
   color: #333;
@@ -98,6 +99,8 @@ export default {
 .el-main {
   background-color: #E9EEF3;
   color: #333;
+  overflow: hidden;
+  padding: 0px;
 }
 
 body > .el-container {

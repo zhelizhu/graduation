@@ -71,6 +71,10 @@ export default {
 
          userId:localStorage.getItem('userId'),
 
+         curPage:1,
+
+         pageSize:12,
+
          production:[],
 
          attention:[],
@@ -92,15 +96,25 @@ export default {
 
           let query = {
 
-              userId:this.userId
+              userId:this.userId,
+
+              currentUserId:this.userId,
+
+              curPage:this.curPage,
+
+              pageSize:this.pageSize
 
           }
 
           production(query).then( (res) => {
 
-              console.log(res);
+              if (res.data.total == this.production.length) {
 
-              this.production = res.data.data
+                  return
+
+              }
+
+              this.production = this.production.concat(res.data.data)
 
           } )
           .catch((err) => {
@@ -189,11 +203,13 @@ export default {
 
       },
 
-      // 刷新用户喜欢
+      // 刷新用户作品
 
-      reFindUserProduction(){
+      reFindUserProduction( curPage ){
 
-        this.findUserProduction()
+        this.curPage = curPage
+
+        // this.findUserProduction()
 
         this.findUserLike()
 
@@ -220,7 +236,9 @@ export default {
 
     display: flex;
 
-    height: 100%;
+    margin-top: 10px;
+
+    height: calc(100vh - 25px);
 
     .my-tabs{
 
@@ -230,23 +248,17 @@ export default {
 
            padding: 0;
 
-           height: 95%;
-
-           width: 1103px;
-
-           overflow-x: scroll;
-
            .scrollbar();
 
            .el-tab-pane{
-
-              height: 100%;
 
               display: flex;
 
               align-items: center;
 
               padding: 10px;
+
+              padding-right: 0;
 
            }
 

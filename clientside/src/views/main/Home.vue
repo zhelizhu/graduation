@@ -5,6 +5,10 @@
 
         <Banner></Banner>
 
+        <Title :title="'短视频热榜'" />
+
+        <hotCard :videoList="hotList"/>
+
     </div>
 
 </template>
@@ -13,13 +17,20 @@
 
 import Banner from '../header/Banner'
 
+import hotCard from '../../components/main/home/hotCard'
+
+import { hotList } from '../../request/api'
+
+import Title from '../../components/home/Title'
 
 export default {
 
-   components: { Banner },
+   components: { Banner,hotCard,Title },
 
    data() {
        return {
+
+           hotList:[]
 
        };
    },
@@ -30,10 +41,31 @@ export default {
 
    methods: {
 
+       findHotList(){
 
+           let query = {
+
+               userId:localStorage.getItem('userId')
+
+           }
+
+           hotList(query).then( (res)=>{
+
+               this.hotList = res.data.data
+
+           } ).catch( (err) => {
+
+
+               console.log(err);
+
+           })
+
+       }
 
    },
    created() {
+
+       this.findHotList()
 
    },
 

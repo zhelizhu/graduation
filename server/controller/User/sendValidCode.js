@@ -19,7 +19,7 @@ module.exports = function (req,res) {
 
       to: req.body.email, // list of receivers
 
-      subject: "后台管理系统", // Subject line
+      subject: "短视频系统", // Subject line
 
       text: '您的验证码为:'+getValidCode+'~5分钟内有效', // plain text body
 

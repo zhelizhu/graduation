@@ -233,7 +233,7 @@ export default {
 
 .upload-video{
 
-    padding-top:50px;
+    padding:10px;
 
     display: flex;
 
@@ -263,7 +263,7 @@ export default {
 
           .el-form-item__label{
 
-            width: 100px;
+            width: 80px;
 
           }
 

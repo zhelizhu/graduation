@@ -54,6 +54,20 @@ let videoComment = require('./Video/videoComment')
 
 let likeVideo = require('./Video/likeVideo')
 
+let sendComment = require('./Video/sendComment')
+
+let opposeVideo = require('./Video/opposeVideo')
+
+let hotList = require('./Video/hotList')
+
+let attentionVideo = require('./Video/attentionVideo')
+
+let video = require('./Video/video')
+
+let search = require('./Video/search')
+
+let editName = require('./User/editName')
+
 module.exports = {
     
     registerCon,
@@ -106,6 +120,20 @@ module.exports = {
 
     videoComment,
 
-    likeVideo
+    likeVideo,
+
+    sendComment,
+
+    opposeVideo,
+
+    hotList,
+
+    attentionVideo,
+
+    video,
+
+    search,
+
+    editName
 
 }

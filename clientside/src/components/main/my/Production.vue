@@ -1,7 +1,7 @@
 <!-- 作品 -->
 <template>
 
-    <div class='production'>
+    <div class='production' v-infinite-scroll="load">
 
       <VideoCard  
         v-for="(pro,index) in production" 
@@ -29,6 +29,8 @@ export default {
    data() {
        return {
 
+         curPage:0
+
        };
    },
 
@@ -37,6 +39,12 @@ export default {
    watch: {},
 
    methods: {
+
+     load(){
+
+       this.$emit('reFindUserProduction',this.curPage += 1)
+
+     },
 
      reFindUserProduction(){
 
@@ -58,9 +66,21 @@ export default {
 
     display: flex;
 
-    align-items: center;
+    // align-items: center;
 
-    justify-content: center;
+    justify-content: flex-start;
+
+    flex-wrap: wrap;
+
+    width: 100%;
+
+    height: calc(100vh - 100px);
+
+    overflow-y: auto;
+
+    padding-left: 20px;
+
+    .scrollbar();
 
 }
 

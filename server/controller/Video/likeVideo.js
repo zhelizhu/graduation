@@ -13,16 +13,27 @@ module.exports = function(req,res){
   video_id = :videoId
   
   `
-
   originalQuery(sql,{ userId,videoId },'INSERT').then( (result) => {
 
-    res.json({
+    let sql = `UPDATE video 
+    
+    SET support_sum = support_sum+1
 
-      status:1000,
+    WHERE video_id = :videoId
+    
+    `
 
-      msg:'点赞成功',
+    originalQuery(sql,{ videoId },'UPDATE').then( () => {
 
-      data:result
+      res.json({
+
+        status:1000,
+  
+        msg:'点赞成功',
+  
+        data:result
+  
+      })
 
     })
 

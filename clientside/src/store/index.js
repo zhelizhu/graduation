@@ -13,23 +13,13 @@ export default new Vuex.Store({
       // 用户token
       userToken:localStorage.getItem('userToken'),
 
+      userDetail:{},
+
       // 视频地址
 
       videoBody:'',
 
-      // 视频id
-
-      videoId:'',
-
-      isPlay:false,
-
-      // 当前视频用户id
-
-      currentUserId:'',
-
-      videoInfo:{},
-
-      comment:[]
+      isPlay:false
 
   },
   mutations: {
@@ -46,6 +36,12 @@ export default new Vuex.Store({
 
     },
 
+    setUserDetail( state,val ){
+
+      state.userDetail = val
+
+    },
+
     setvideoBody( state,val ){
 
       state.videoBody = val
@@ -55,30 +51,6 @@ export default new Vuex.Store({
     setIsPlay( state,val ){
 
       state.isPlay = val
-
-    },
-
-    setCurrentUserId( state,val ){
-
-      state.currentUserId = val
-
-    },
-
-    setVideoId( state,val ){
-
-      state.videoId = val
-
-    },
-
-    setVideoInfo( state,val ){
-
-      state.videoInfo = val
-
-    },
-
-    setComment( state,val ){
-
-      state.comment = val
 
     }
 

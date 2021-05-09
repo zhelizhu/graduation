@@ -64,6 +64,10 @@ User.init({
     allowNull: false,
     defaultValue: 'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1200678983,2021774119&fm=111&gp=0.jpg',
     comment: '用户头像'
+  },
+  createdAt:{
+    type: DataTypes.DATE,
+    defaultValue: 'CURRENT_TIMESTAMP',   
   }
 }, 
 {

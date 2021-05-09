@@ -3,13 +3,17 @@
 
     <div class='user-card' @click="toUserHome(userInfo.user_id)">
 
-      <img class="via" :src="userInfo.avatar" alt="">
+      <div class="avatar" @click="closeVideo">
+
+        <el-avatar size="large" :src="userInfo.avatar"></el-avatar>
+
+      </div>
 
       <div class="info">
 
-        <span class="info-title">{{userInfo.email}}</span>
+        <!-- <span class="info-title">{{userInfo.email}}</span> -->
 
-        <span class="info-content">{{userInfo.nickName}}</span>
+        <span class="info-content">{{userInfo.nick_name}}</span>
 
       </div>
 
@@ -19,7 +23,7 @@
 
         <el-button v-if="mutually === 1" type="success" round @click.stop="cancelAttention(userInfo.user_id)">已关注</el-button>
 
-        <el-button v-if="mutually === 2" type="primary" round @click.stop="cancelAttention(userInfo.user_id)"><i class="el-icon-plus"></i> 相互关注</el-button>
+        <el-button v-if="mutually === 2" type="primary" round @click.stop="cancelAttention(userInfo.user_id)"><i class="el-icon-plus"></i> 相关注</el-button>
 
       </div>
 
@@ -30,6 +34,8 @@
 <script>
 
 import { callAttention,playAttention } from '../../request/api'
+
+import { mapMutations } from 'vuex'
 
 export default {
 
@@ -61,9 +67,17 @@ export default {
 
    methods: {
 
+     ...mapMutations(['setIsPlay']),
+
      toUserHome(id){
 
        this.$router.push('/userHome/'+id)
+
+     },
+
+     closeVideo(){
+
+       this.setIsPlay(false)
 
      },
 

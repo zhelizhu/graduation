@@ -23,25 +23,17 @@ const routes = [
       name: 'Video',
       component: () => import('../views/main/Video.vue')
     }, {
-      path: '/live',
-      name: 'Live',
-      component: () => import('../views/main/Live.vue')
-    }, {
-      path: '/local',
-      name: 'Local',
-      component: () => import('../views/main/Local.vue')
-    }, {
-      path: '/film',
-      name: 'Film',
-      component: () => import('../views/main/Film.vue')
-    }, {
+      path: '/search',
+      name: 'Search',
+      component: () => import('../views/main/Search.vue')
+    },{
       path: '/my',
       name: 'My',
       component: () => import('../views/main/My.vue')
     },{
       path: '/userHome/:id',
       name: 'userHome',
-      component:() => import('../views/user/userHome.vue'),
+      component:() => import('../components/user/userHome.vue'),
     }]
   },
   {

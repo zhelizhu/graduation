@@ -147,3 +147,60 @@ export const likeVideo = (params) => {
     return postAxios('/videos/likeVideo',params)
 
 }
+
+// 用户发送评论
+
+export const sendComment = (params) => {
+
+    return postAxios('/videos/sendComment',params)
+
+}
+
+
+// 举报视频
+
+export const opposeVideo = (params) => {
+
+    return postAxios('/videos/opposeVideo',params)
+
+}
+
+// 热门视频
+
+export const hotList = (params) => {
+
+    return getAxios('/videos/hotList',params)
+
+}
+
+// 关注用户视频
+
+export const attentionVideo = (params) => {
+
+    return getAxios('/videos/attentionVideo',params)
+
+}
+
+// 所有视频
+
+export const video = (params) => {
+
+    return getAxios('/videos/video',params)
+
+}
+
+// 搜索视频/用户
+
+export const search = (params) => {
+
+    return postAxios('/videos/search',params)
+
+}
+
+// 修改昵称
+
+export const editName = (params) => {
+
+    return postAxios('/users/editName',params)
+
+}

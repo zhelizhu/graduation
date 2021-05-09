@@ -70,10 +70,10 @@ app.all('*', function(req, res, next) {
 
 middleWare(app)
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/videos',videosRouter)
 app.use('/utils',utilsRouter)
 app.use('/clientside',clientsideRouter)
+app.use('/users', usersRouter);
+app.use('/videos',videosRouter)
 
 
 // catch 404 and forward to error handler

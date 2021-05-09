@@ -3,7 +3,7 @@
 
     <div class='banner'>
 
-      <el-carousel trigger="click" type="card" height="500px" :interval="4000">
+      <el-carousel trigger="click" type="card" height="300px" :interval="4000" indicator-position="none">
         
         <el-carousel-item v-for="(item,index) in carousel" :key="index">
 
@@ -11,8 +11,6 @@
 
         </el-carousel-item>
       </el-carousel>
-
-      <ColorLine></ColorLine>
 
     </div>
 
@@ -22,12 +20,9 @@
 
 import { banner } from '../../request/api'
 
-import ColorLine from '../../components/home/ColorLine'
-
-
 export default {
 
-   components: { ColorLine },
+   components: {  },
 
    data() {
 
@@ -49,8 +44,6 @@ export default {
 
            banner({}).then( (res) =>{
 
-                console.log(res);
-
                 this.carousel = res.data.data
 
            } )
@@ -71,6 +64,12 @@ export default {
 </script>
 
 <style lang='less' scoped>
+
+.banner{
+
+  background: @black;
+
+}
 
 .banner-video{
 

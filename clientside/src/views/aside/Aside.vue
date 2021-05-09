@@ -64,7 +64,7 @@ export default {
 
            icon: 'el-icon-video-camera',
 
-           title: '短视频',
+           title: '推荐',
 
            isSelect:false,
 
@@ -72,33 +72,13 @@ export default {
 
          },{
 
-           icon: 'el-icon-video-camera-solid',
+           icon: 'el-icon-search',
 
-           title: '直播',
-
-           isSelect:false,
-
-           to: '/live'
-
-         },{
-
-           icon: 'el-icon-s-promotion',
-
-           title: '同城',
+           title: '搜索',
 
            isSelect:false,
 
-           to: '/local'
-
-         },{
-
-           icon: 'el-icon-view',
-
-           title: '电影',
-
-           isSelect:false,
-
-           to: '/film'
+           to: '/search'
 
          },{
 
@@ -158,7 +138,9 @@ export default {
 
   height: 100%;
 
-  background: #f8f8f8;
+  background: @black;
+
+  overflow: hidden;
 
   .logo{
 
@@ -170,15 +152,15 @@ export default {
 
       transform: translateX(-50%);
 
-      width: 60px;
+      width: 50px;
 
-      height: 60px;
+      height: 50px;
 
   }
 
   .menu{
 
-    padding-top: 65px;
+    padding-top: 50px;
 
     li{
 
@@ -192,6 +174,8 @@ export default {
 
       cursor: pointer;
 
+      color: #fff;
+
       &.select{
 
         color: @ThemeColor;
@@ -200,9 +184,15 @@ export default {
 
       i{
 
-        font-size: 30px;
+        font-size: 20px;
 
         margin-bottom: 10px;
+
+      }
+
+      span{
+
+        font-size: 10px;
 
       }
 

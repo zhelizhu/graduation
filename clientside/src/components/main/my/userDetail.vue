@@ -26,7 +26,9 @@
 
       </div>
     
-      <span class="my-username">{{userDetail.nickName}}</span>
+      <span v-if="isEdit" @dblclick="Edit" class="my-username">{{userDetail.nick_name}}</span>
+
+      <el-input v-else @blur="Edit" v-model="userDetail.nick_name" ref="myInput" class="my-username"></el-input>
 
       <span class="my-email">{{userDetail.email}}</span>
 
@@ -56,7 +58,9 @@
 
 <script>
 
-import { userDetail,userAvatar } from "@/request/api";
+import { userDetail,userAvatar,editName } from "@/request/api";
+
+import { mapMutations } from 'vuex'
 
 export default {
 
@@ -92,6 +96,8 @@ export default {
 
           userToken:localStorage.getItem('userToken'),
 
+          isEdit: true
+
        };
    },
 
@@ -100,6 +106,45 @@ export default {
    watch: {},
 
    methods: {
+
+     ...mapMutations(['setUserDetail']),
+
+     Edit(){
+
+       this.isEdit = !this.isEdit
+
+       this.$nextTick(()=>{
+
+         if (this.$refs.myInput) {
+
+             this.$refs.myInput.focus()
+
+         }
+         else{
+
+             let params = {
+
+               userId: localStorage.getItem('userId'),
+
+               nickName: this.userDetail.nick_name
+
+             }
+
+             editName(params).then( (res) => {
+
+               this.$message.success(res.data.msg);
+
+             } ).catch( (err) => {
+
+               console.log(err);
+
+             })
+
+         }
+
+       })
+
+     },
 
     // 用户详情
 
@@ -114,6 +159,8 @@ export default {
       userDetail(params).then((res)=>{
 
         this.userDetail = res.data.data[0]
+
+        this.setUserDetail(this.userDetail)
 
         this.cacheSrc = this.userDetail.avatar
 
@@ -205,7 +252,9 @@ export default {
 
           i{
 
-            font-size: 40px;
+            font-size: 20px;
+
+            color: #1296db;
 
           }
 
@@ -265,7 +314,7 @@ export default {
 
         .my-username,.my-email{
 
-            font-size: 25px;
+            font-size: 16px;
 
         }
 
@@ -275,17 +324,19 @@ export default {
 
             .user-info-num,.user-info-title{
 
+                font-size: 8px;
+
                 height: 40px;
 
                 line-height: 40px;
 
-                padding: 0 40px;
+                padding: 0 20px;
+
+                text-align: center;
 
             }
 
             .user-info-num{
-
-                font-size: 25px;
 
                 font-weight: 700;
 

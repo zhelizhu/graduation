@@ -58,6 +58,8 @@ export default {
 
   flex-wrap: wrap;
 
+  padding-left: 35px;
+
   align-content: flex-start;
 
 }

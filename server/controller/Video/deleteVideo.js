@@ -14,7 +14,7 @@ module.exports = function(req,res) {
     } = req.body
     
     if (proOrLike == 0) {
-      
+
       let sql = `DELETE FROM video
 
       WHERE video_id = :videoId`
@@ -87,16 +87,25 @@ module.exports = function(req,res) {
       `
       originalQuery(sql,{ videoId,userId },'DELETE').then( (result) => {
 
-        res.json({
-        
-          status: 1001,
-        
-          msg: '取消赞成功',
-        
-          data: result
-        
-        })
+        let sql = `UPDATE video 
+    
+        SET support_sum = support_sum-1
+    
+        WHERE video_id = :videoId`
 
+        originalQuery(sql,{ videoId },'UPDATE').then( (result) => {
+
+            res.json({
+            
+              status: 1001,
+            
+              msg: '取消赞成功',
+            
+              data: result
+            
+            })
+
+        })
       
       } ).catch((err) => {
       

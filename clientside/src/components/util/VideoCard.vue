@@ -5,7 +5,7 @@
 
         <video  class="card-video" :src="video.video_src"></video>
 
-        <span class="font">{{video.video_name|fontFilter(10)}}</span>
+        <span class="font">{{video.video_name}}</span>
 
         <div class="sub">
           <i class="el-icon-star-on"></i>
@@ -17,7 +17,7 @@
 
           <i class="el-icon-reading" @click="playVideo(video)"></i>
 
-          <i v-if="isShowDel == 0" class="el-icon-delete" @click="doUserVideo(video.video_id)"></i>
+          <i v-if="isShowDel == 0" class="el-icon-delete" @click="deleteVideo(video.video_id)"></i>
 
           <i v-if="isShowDel == 1" :class="isLike" @click="doUserVideo(video.video_id)"></i>
 
@@ -31,9 +31,9 @@
 
 import { fontFilter } from '../../filter/fontFilter'
 
-import { deleteVideo,videoInfo,videoComment,likeVideo } from '@/request/api'
+import { deleteVideo,likeVideo } from '@/request/api'
 
-import { mapState,mapMutations} from 'vuex'
+import { mapMutations} from 'vuex'
 
 export default {
 
@@ -45,7 +45,7 @@ export default {
 
       userId:localStorage.getItem('userId'),
 
-      isLike:'el-icon-star-on'
+      isLike:this.video.isLike==0?'el-icon-star-off':'el-icon-star-on'
 
     }
 
@@ -53,21 +53,15 @@ export default {
 
   computed:{
 
-    ...mapState(['videoSrc','videoInfo'])
-
   },
 
   methods:{
 
-    ...mapMutations(['setvideoBody','setIsPlay','setCurrentUserId','setVideoInfo','setComment']),
+    ...mapMutations(['setvideoBody','setIsPlay']),
 
     playVideo(video){
 
         this.setvideoBody(video)
-
-        this.findVideosInfo(video.video_id)
-
-        this.findVideoComment(video.video_id)
 
         this.setIsPlay(true)
 
@@ -113,6 +107,8 @@ export default {
 
             }
 
+            console.log(params);
+
             deleteVideo(params).then( (res) => {
             
                  this.$message.success(res.data.msg);
@@ -130,49 +126,32 @@ export default {
 
     },
 
-    findVideosInfo(videoId){
+    deleteVideo(videoId){
 
-      let query = {
+        let params = {
+          
+             userId:this.userId,
 
-        userId:this.userId,
+             videoId,
 
-        videoId
+             proOrLike:this.proOrLike
 
-      }
+          }
 
-      videoInfo(query).then( (res)=>{
+          console.log(params);
 
-        this.setVideoInfo(res.data.data)
+          deleteVideo(params).then( (res) => {
+          
+               this.$message.success(res.data.msg);
 
-        console.log(this.videoInfo);
+          } )
+          .catch((err) => {
+          
+              console.log(err);
 
-      } )
-      .catch( (err)=>{
+          })
 
-        console.log(err);
-
-      } ) 
-
-    },
-
-    findVideoComment(videoId){
-
-      let query = {
-
-        videoId
-
-      }
-
-      videoComment(query).then( (res)=>{
-
-        this.setComment(res.data.data)
-
-      } )
-      .catch( (err)=>{
-
-        console.log(err);
-
-      } ) 
+        this.isLike = 'el-icon-star-off'
 
     }
 
@@ -182,7 +161,7 @@ export default {
 
     fontFilter
 
-  }
+  },
 
 }
 </script>
@@ -193,7 +172,9 @@ export default {
 
     position: relative;
 
-    max-width: 200px;
+    max-width: 165px;
+
+    height: 330px;
 
     cursor: pointer;
 
@@ -207,9 +188,9 @@ export default {
 
     &:hover{
 
-      // transform: scale(1.1);
-
       .mask{
+
+        max-width: 165px;
 
         opacity: 1;
 
@@ -221,41 +202,47 @@ export default {
 
       max-width: 260px;
 
-      height: auto;
+      height: 290px;
 
     }
 
     .font{
 
-      font-size: 18px;
-
-      font-weight: 700;
+      font-size: 10px;
 
       padding: 10px;
+
+      overflow: hidden;
+
+      white-space: nowrap;
+
+      text-overflow: ellipsis;
 
     }
 
     .sub{
 
-      height: 50px;
+      height: 10px;
 
       display: flex;
 
       align-items: center;
 
-      font-size: 18px;
+      font-size: 8px;
 
       color: #999999;
 
       .sub-font{
 
-        padding: 0 10px;
+        padding: 0 5px;
+
+        font-size: 8px;
 
       }
 
       i{
 
-        font-size: 26px;
+        font-size:16px;
 
       }
 
@@ -267,7 +254,7 @@ export default {
 
       z-index: 2;
 
-      width: 200px;
+      width: 90%;
 
       height: 100%;
 
@@ -289,7 +276,7 @@ export default {
 
         color: aliceblue;
 
-        margin: 20px;
+        margin: 10px;
 
         &:hover{
 

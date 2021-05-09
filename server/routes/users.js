@@ -31,7 +31,9 @@ let {
 
   playAttention,
 
-  fans
+  fans,
+
+  editName
 
 } = require('../controller/controller')
 
@@ -68,6 +70,10 @@ router.post('/callAttention', callAttention)
 // 用户关注
 
 router.post('/playAttention', playAttention)
+
+// 用户关注
+
+router.post('/editName', editName)
 
 // 用户粉丝
 
